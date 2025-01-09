@@ -1,0 +1,134 @@
+Sistema de organização de despesas
+
+1- metodos necessarios:
+- Exibir resumo das despesas (x)
+- Método para pagamento antecipado ()
+- Método para adicionar uma nova despesa (x)
+- Método de alerta de saldo baixo (x)
+- Método para cálculo do total de despesas futuras ()
+- Relatório de despesas pagas e pendentes (x)
+- Método para cancelar uma despesa (x)
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class SystemExpense {
+    private List<Expense> listDespesas = new ArrayList <>();
+    private float accountBalance = 0; //saldo em conta
+
+    public SystemExpense(float accountBalance){
+        this.accountBalance = accountBalance;
+    }
+
+    public void addExpense(Expense despesa){
+        listDespesas.add(despesa);
+        System.out.println("Despesa " +despesa.getNameExpense()+ " adicionada com um valor de: R$" +despesa.getValueMensalInstallment());
+    }
+
+    public void alertBalanceLow(){
+        if (accountBalance <= 300) {
+            System.out.println("Saldo esta baixo, vai com calma nas despesas!");
+        }
+    }
+
+    public void controlExpense(){
+        for(Expense despesa : listDespesas ){
+            if(despesa.getValueMensalInstallment() == 0 && despesa.getInstallmentExpense() == 0){
+                listDespesas.remove(despesa);
+                System.out.println("A despesa " +despesa.getNameExpense() + " foi paga");
+            }
+            else{
+                System.out.println("As despesas a pagar são" + despesa.getNameExpense() + " no dia " + despesa.getDayPay());
+            }
+        }
+    }
+
+    public void cancelExpense(Expense despesa){   
+        if (listDespesas.contains(despesa)) {
+            listDespesas.remove(despesa);
+            System.out.println(despesa.getNameExpense() + " Foi cancelada");
+        }
+        else{
+            System.out.println("Despesa " +despesa.getNameExpense()+ " não encontrada");
+        }
+    }
+
+
+
+
+}
+
+
+
+expense 
+
+
+class Expense {
+    private String nameExpense;
+    private float valueExpense = 0;
+    private int installmentExpense = 0; // parcelas despesas
+    private float valueMensalInstallment; // valor mensal das parcelas
+    private int dayPay = 0;
+
+    // Construtor da classe despesas
+    public Expense(String nameExpense, float valueExpense, int installmentExpense, float valueMensalInstallment, int dayPay, float accountBalance) {
+        this.nameExpense = nameExpense;
+        this.valueExpense = valueExpense;
+        this.installmentExpense = installmentExpense;
+        this.valueMensalInstallment = valueMensalInstallment;
+        this.dayPay = dayPay;
+    }
+
+    // Getters
+    public String getNameExpense() {
+        return nameExpense;
+    }
+
+    public float getValueExpense() {
+        return valueExpense;
+    }
+
+    public int getInstallmentExpense() {
+        return installmentExpense;
+    }
+
+    public float getValueMensalInstallment() {
+        return valueMensalInstallment;
+    }
+
+    public int getDayPay() {
+        return dayPay;
+    }
+
+    // Setters
+    public void setNameExpense(String nameExpense) {
+        this.nameExpense = nameExpense;
+    }
+
+    public void setValueExpense(float valueExpense) {
+        this.valueExpense = valueExpense;
+    }
+
+    public void setInstallmentExpense(int installmentExpense) {
+        this.installmentExpense = installmentExpense;
+    }
+
+    public void setValueMensalInstallment(float valueMensalInstallment) {
+        this.valueMensalInstallment = valueMensalInstallment;
+    }
+
+    public void setDayPay(int dayPay) {
+        this.dayPay = dayPay;
+    }
+
+   
+    public void showExpense(){
+        System.out.println("Nome despesa: " + nameExpense);
+        System.out.println("Valor total das despesas: " + valueExpense);
+        System.out.println("Valor da parcela: " + valueMensalInstallment);
+        System.out.println("Parcelas restantes: " + installmentExpense);
+        System.out.println("Dia do pagamento: " + dayPay);
+    }
+
+}
